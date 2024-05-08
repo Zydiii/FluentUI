@@ -51,11 +51,12 @@ T.MenuItem {
         }
     }
     contentItem: Item{
-        Row{
+        RowLayout{
             spacing: control.iconSpacing
             readonly property real arrowPadding: control.subMenu && control.arrow ? control.arrow.width + control.spacing : 0
             readonly property real indicatorPadding: control.checkable && control.indicator ? control.indicator.width + control.spacing : 0
             anchors{
+                fill: parent
                 verticalCenter: parent.verticalCenter
                 left: parent.left
                 leftMargin: (!control.mirrored ? indicatorPadding : arrowPadding)+5
@@ -65,15 +66,31 @@ T.MenuItem {
             FluLoader{
                 id:loader_icon
                 sourceComponent: iconDelegate
-                anchors.verticalCenter: parent.verticalCenter
+                // anchors.verticalCenter: parent.verticalCenter
                 visible: status === Loader.Ready
+                Layout.alignment: Qt.AlignVCenter
             }
             FluText {
                 id:content_text
                 text: control.text
                 font: control.font
                 color: control.textColor
-                anchors.verticalCenter: parent.verticalCenter
+                // anchors.verticalCenter: parent.verticalCenter
+                Layout.fillWidth: true
+                Layout.alignment: Qt.AlignVCenter
+                horizontalAlignment: Qt.AlignLeft
+                verticalAlignment: Qt.AlignVCenter
+            }
+            FluText {
+                id: shortcut_text
+                property bool showShortCut: control.action && control.action.hasOwnProperty("shortcut") && control.action.shortcut !== undefined
+                text: showShortCut ? control.action.shortcut : ""
+                font: control.font
+                color: control.textColor
+                // anchors.verticalCenter: parent.verticalCenter
+                Layout.alignment: Qt.AlignVCenter
+                horizontalAlignment: Qt.AlignRight
+                verticalAlignment: Qt.AlignVCenter
             }
         }
     }
