@@ -25,6 +25,9 @@ Item {
     property alias buttonMenu: btn_menu
     property alias buttonBack: btn_back
     property alias imageLogo: image_logo
+    property bool layout_listShowBorder: true
+    property string status_text: "Ready"
+    property string fps_text: "0"
     signal logoClicked
     id:control
     Item{
@@ -869,7 +872,7 @@ Item {
             left: parent.left
             top: nav_app_bar.bottom
             right: parent.right
-            bottom: parent.bottom
+            bottom: layout_list.bottom
             leftMargin: {
                 if(d.isMinimal){
                     return 0
@@ -899,6 +902,41 @@ Item {
             d.enableNavigationPanel = false
         }
     }
+
+    Rectangle {
+        id: status_bar
+        anchors {
+            bottom: parent.bottom
+        }
+        width: parent.width
+        height: 20
+        color: "transparent"
+        border.width: 1
+        border.color: FluTheme.dark ? Qt.rgba(45/255,45/255,45/255,1) : Qt.rgba(226/255,230/255,234/255,1)
+
+        RowLayout {
+            anchors.fill: parent
+            anchors.rightMargin: 10
+            spacing: 10
+
+            FluText {
+                text: "Status: " + status_text
+                elide: Text.ElideRight
+                color: FluTheme.dark ? FluColors.White : FluColors.Grey220
+                opacity: 0.3
+                Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
+                // Layout.preferredHeight: parent.height - 5
+            }
+            // FluText {
+            //     text: "FPS: " + fps_text
+            //     elide: Text.ElideRight
+            //     color: FluTheme.dark ? FluColors.White : FluColors.Grey220
+            //     opacity: 0.3
+            //     Layout.alignment: Qt.AlignVCenter |  Qt.AlignRight
+            // }
+        }
+    }
+
     Rectangle{
         id:layout_list
         width: {
@@ -910,10 +948,10 @@ Item {
         anchors{
             top: parent.top
             topMargin: control.navTopMargin
-            bottom: parent.bottom
+            bottom: status_bar.top
         }
         border.color: FluTheme.dark ? Qt.rgba(45/255,45/255,45/255,1) : Qt.rgba(226/255,230/255,234/255,1)
-        border.width:  d.isMinimal || d.isCompactAndPanel ? 1 : 0
+        border.width:  d.isMinimal || d.isCompactAndPanel || layout_listShowBorder ? 1 : 0
         color: {
             if(d.isMinimal || d.enableNavigationPanel){
                 return FluTheme.dark ? Qt.rgba(61/255,61/255,61/255,1) : Qt.rgba(243/255,243/255,243/255,1)
