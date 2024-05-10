@@ -66,7 +66,6 @@ T.MenuItem {
             FluLoader{
                 id:loader_icon
                 sourceComponent: iconDelegate
-                // anchors.verticalCenter: parent.verticalCenter
                 visible: status === Loader.Ready
                 Layout.alignment: Qt.AlignVCenter
             }
@@ -75,11 +74,7 @@ T.MenuItem {
                 text: control.text
                 font: control.font
                 color: control.textColor
-                // anchors.verticalCenter: parent.verticalCenter
                 Layout.fillWidth: true
-                Layout.alignment: Qt.AlignVCenter
-                horizontalAlignment: Qt.AlignLeft
-                verticalAlignment: Qt.AlignVCenter
             }
             FluText {
                 id: shortcut_text
@@ -87,10 +82,6 @@ T.MenuItem {
                 text: showShortCut ? control.action.shortcut : ""
                 font: control.font
                 color: control.textColor
-                // anchors.verticalCenter: parent.verticalCenter
-                Layout.alignment: Qt.AlignVCenter
-                horizontalAlignment: Qt.AlignRight
-                verticalAlignment: Qt.AlignVCenter
             }
         }
     }
