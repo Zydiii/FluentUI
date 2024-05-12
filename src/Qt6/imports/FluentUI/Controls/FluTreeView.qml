@@ -17,6 +17,7 @@ Rectangle {
     property color selectedBorderColor: FluTheme.primaryColor
     property color selectedColor: FluTools.withOpacity(FluTheme.primaryColor,0.3)
     readonly property alias current: d.current
+    property bool showHeader: false
     id:control
     color: {
         if(Window.active){
@@ -678,7 +679,7 @@ Rectangle {
             right: table_view.right
             top: parent.top
         }
-        height: Math.max(1, contentHeight)
+        height: showHeader ? Math.max(1, contentHeight) : 0
         boundsBehavior: Flickable.StopAtBounds
         clip: true
         syncDirection: Qt.Horizontal
