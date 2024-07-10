@@ -14,13 +14,12 @@ FluWindow {
     id:window
     title: "FluentUI"
     width: 1000
-    height: 680
-    minimumWidth: 680
-    minimumHeight: 200
+    height: 668
+    minimumWidth: 668
+    minimumHeight: 320
     launchMode: FluWindowType.SingleTask
     fitsAppBarWindows: true
     appBar: FluAppBar {
-        width: window.width
         height: 30
         showDark: true
         darkClickListener:(button)=>handleDarkChanged(button)
@@ -235,7 +234,7 @@ FluWindow {
         id: com_reveal
         CircularReveal{
             id: reveal
-            target: window.contentItem
+            target: window.containerItem()
             anchors.fill: parent
             onAnimationFinished:{
                 //动画结束后释放资源
@@ -264,7 +263,7 @@ FluWindow {
                 return
             }
             loader_reveal.sourceComponent = com_reveal
-            var target = window.contentItem
+            var target = window.containerItem()
             var pos = button.mapToItem(target,0,0)
             var mouseX = pos.x
             var mouseY = pos.y
