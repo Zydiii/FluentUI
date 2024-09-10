@@ -12,7 +12,9 @@ FluScrollablePage{
     FluMenu {
         id:menu
         title: qsTr("File")
-        Action { text: qsTr("New...")}
+        Action { text: qsTr("New...")
+            shortcut: "Ctrl+O"
+            onTriggered: showError(qsTr("Disable"))}
         Action { text: qsTr("Open...") }
         Action { text: qsTr("Save") }
         FluMenuSeparator { }
@@ -21,6 +23,7 @@ FluScrollablePage{
             onTriggered: {
                 showError("Quit")
             }
+            //shortcut: StandardKey.Paste
         }
         FluMenuItem{
             text: qsTr("Search")
@@ -118,7 +121,8 @@ menu.popup()
                 id:menu_bar
                 FluMenu {
                     title: qsTr("File")
-                    Action { text: qsTr("New...") }
+                    Action { text: qsTr("New...") 
+                    shortcut: "Ctrl+E,Ctrl+W"}
                     Action { text: qsTr("Open...") }
                     Action { text: qsTr("Save") }
                     FluMenuSeparator { }
@@ -129,7 +133,8 @@ menu.popup()
                     }
                     FluMenu{
                         title: qsTr("Save As...")
-                        Action { text: qsTr("Doc") }
+                        Action { text: qsTr("Doc") 
+                        shortcut: StandardKey.Paste}
                         Action { text: qsTr("PDF") }
                     }
                 }

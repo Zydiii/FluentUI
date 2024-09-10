@@ -16,6 +16,7 @@ Button {
     property color normalColor: FluTheme.itemNormalColor
     property color disableColor: FluTheme.itemNormalColor
     property Component iconDelegate: com_icon
+    property bool showBackground: false
     property color color: {
         if(!enabled){
             return disableColor
@@ -54,10 +55,15 @@ Button {
         implicitWidth: 30
         implicitHeight: 30
         radius: control.radius
-        color:control.color
+        color: showBackground ? (control.checked ? "steelblue" : control.color) : control.color
+        border.color: showBackground ? (control.checked ? "lightsteelblue" : "transparent") : "transparent"
+        border.width: showBackground ? (control.checked ? 2 : 0) : 0
         FluFocusRectangle{
             visible: control.activeFocus
         }
+    }
+    onClicked: {
+        control.checked = !control.checked
     }
     Component{
         id:com_icon

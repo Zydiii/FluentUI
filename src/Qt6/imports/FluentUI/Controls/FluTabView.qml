@@ -8,6 +8,8 @@ Item {
     property int closeButtonVisibility : FluTabViewType.Always
     property int itemWidth: 146
     property bool addButtonVisibility: true
+    property bool focusNewOpened: true
+    property bool focusOnDrag: true
     signal newPressed
     id:control
     implicitHeight: height
@@ -119,6 +121,7 @@ Item {
                             d.dragBehavior = false;
                             var pos = tab_nav.mapFromItem(item_container, 0, 0)
                             d.dragIndex = model.index
+                            tab_nav.currentIndex = focusOnDrag ? d.dragIndex : tab_nav.currentIndex
                             item_container.parent = tab_nav
                             item_container.x = pos.x
                             item_container.y = pos.y
@@ -276,10 +279,19 @@ Item {
         Repeater{
             model:tab_model
             FluLoader{
+                signal appendRequested(text : string)
+
                 property var argument: model.argument
+                property var name: model.text
                 anchors.fill: parent
                 sourceComponent: model.page
                 visible: tab_nav.currentIndex === index
+
+                // onAppendRequested: text => {model.text = text}
+
+                onAppendRequested: (text) => {
+                     model.text = text
+                }
             }
         }
     }
@@ -288,6 +300,7 @@ Item {
     }
     function appendTab(icon,text,page,argument){
         tab_model.append(createTab(icon,text,page,argument))
+        tab_nav.currentIndex = focusNewOpened ? getIndexByText(text) : tab_nav.currentIndex
     }
     function setTabList(list){
         tab_model.clear()
@@ -296,4 +309,14 @@ Item {
     function count(){
         return tab_nav.count
     }
+
+    // get the index of model data
+    function getIndexByText(text) {
+        for( var i = 0; i < tab_model.rowCount(); i++ ) {
+            if(tab_model.get(i).text === text)
+                return i;
+        }
+        return count() - 1;
+    }
+
 }
